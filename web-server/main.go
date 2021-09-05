@@ -19,7 +19,7 @@ func main() {
 
 func ReportHandler(w http.ResponseWriter, r *http.Request) {
 
-	csvReader := request_reader.CsvReaderWrapper{}
+	csvReader := createReader()
 	records, err := csvReader.Read(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -34,4 +34,8 @@ func ReportHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(b)
 
 	w.WriteHeader(http.StatusOK)
+}
+
+func createReader() request_reader.PersonRecordsReader {
+	return request_reader.CsvReaderWrapper{}
 }
