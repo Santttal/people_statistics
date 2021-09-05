@@ -26,6 +26,10 @@ func ReportHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	b, err := json.Marshal(records)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	w.Write(b)
 
