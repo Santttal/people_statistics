@@ -27,7 +27,7 @@ func ReportHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	b, err := json.Marshal(records)
 
-	fmt.Println(string(b))
+	w.Write(b)
 
 	w.WriteHeader(http.StatusOK)
 }
