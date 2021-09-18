@@ -1,4 +1,4 @@
-package request_reader
+package request
 
 import (
 	"encoding/csv"

@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	request_reader "github.com/Santttal/people-statistics/web-server/request-reader"
+	"github.com/Santttal/people-statistics/web/request"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -18,7 +18,6 @@ func main() {
 }
 
 func ReportHandler(w http.ResponseWriter, r *http.Request) {
-
 	csvReader := createReader()
 	records, err := csvReader.Read(r.Body)
 	if err != nil {
@@ -36,6 +35,6 @@ func ReportHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func createReader() request_reader.PersonRecordsReader {
-	return request_reader.CsvReaderWrapper{}
+func createReader() request.PersonRecordsReader {
+	return request.CsvReaderWrapper{}
 }

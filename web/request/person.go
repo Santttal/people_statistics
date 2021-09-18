@@ -1,4 +1,4 @@
-package request_reader
+package request
 
 type PersonRecord struct {
 	Name   string
