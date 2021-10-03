@@ -2,8 +2,10 @@ package request
 
 import (
 	"encoding/csv"
+	"encoding/json"
 	"errors"
 	"io"
+	"net/http"
 	"strconv"
 )
 
@@ -44,4 +46,25 @@ func (w CsvReaderWrapper) Read(r io.Reader) ([]PersonRecord, error) {
 	}
 
 	return personRecords, nil
+}
+
+type ReportHandler struct {
+	CsvReader PersonRecordsReader
+}
+
+func (h ReportHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	records, err := h.CsvReader.Read(r.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	b, err := json.Marshal(records)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Write(b)
+
+	w.WriteHeader(http.StatusOK)
 }
