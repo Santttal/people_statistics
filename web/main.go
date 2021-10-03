@@ -11,10 +11,15 @@ import (
 
 func main() {
 	fmt.Println("Starting server..")
-	r := mux.NewRouter()
+	r := createRouter()
 	r.HandleFunc("/add-report", ReportHandler).Methods(http.MethodPost)
 
 	log.Fatal(http.ListenAndServe(":8084", r))
+}
+
+func createRouter() *mux.Router {
+	r := mux.NewRouter()
+	return r
 }
 
 func ReportHandler(w http.ResponseWriter, r *http.Request) {
